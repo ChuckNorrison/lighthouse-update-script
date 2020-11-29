@@ -29,6 +29,16 @@ done
 echo "'make' executed"
 
 while true; do
+    read -p "Replace new binary $tag in /usr/local/bin now?" yn
+    case $yn in
+        [Yy]* ) sudo cp $HOME/.cargo/bin /usr/local/bin; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+echo "binary replaced"
+
+while true; do
     read -p "Restart lighthouse?" yn
     case $yn in
         [Yy]* ) sudo systemctl restart lighthouse-beacon.service; sudo systemctl restart lighthouse-validators.service; break;;
