@@ -70,7 +70,7 @@ echo "'make' executed"
 while true; do
     read -p "Replace new binary $tag in /usr/local/bin now?" yn
     case $yn in
-        [Yy]* ) sudo cp $HOME/.cargo/bin /usr/local/bin; break;;
+        [Yy]* ) sudo cp $HOME/.cargo/bin/lighthouse /usr/local/bin/lighthouse; break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
