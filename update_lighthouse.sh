@@ -107,6 +107,5 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-sudo systemctl status lighthouse-beacon.service
-sudo systemctl status lighthouse-validators.service
+systemctl list-units --type=service --state=running | grep lighthouse
 echo "Job Done"
