@@ -7,11 +7,14 @@ This script will check your lighthouse folders and permissions
 * Build from source
 * Replace lighthouse binary in `/usr/local/bin`
 
-## create new users without home dir and without shell permissions
+## Initial Setup
+This is the recommended way to setup your services and data folders.
+
+### create new users without home dir and without shell permissions
 * `sudo useradd --no-create-home --shell /bin/false lighthousebeacon`
 * `sudo useradd --no-create-home --shell /bin/false lighthousevalidator`
 
-## create folders with permissions
+### create folders with permissions
 * `sudo mkdir -p /var/lib/lighthouse/beacon`
 * `sudo mkdir -p /var/lib/lighthouse/validators`
 * `sudo mkdir -p /var/lib/lighthouse/secrets`
@@ -19,19 +22,22 @@ This script will check your lighthouse folders and permissions
 * `sudo chown -R lighthousevalidator:lighthousevalidator /var/lib/lighthouse/validators`
 * `sudo chown -R lighthousevalidator:lighthousevalidator /var/lib/lighthouse/secrets`
 
-## set root permission just on this
+### set root permission on the parent directory
 * `sudo chown root:root /var/lib/lighthouse`
 
-## initial git clone
+### get lighthouse sources from github
 * `cd ~/git`
 * `git clone https://github.com/sigp/lighthouse`
 
-## usage
+### usage
 * `./update_lighthouse.sh`
 
-This script was updated based on this tutorial:
+## Conclusion
+
+This script was updated based on this tutorial:\
 https://agstakingco.gitbook.io/pyrmont-lighthouse-eth-2-0-staking-guide/
 
-We like to run as a service and we dont want to use home directory. 
+We like to run as a service and we dont want to use home directory. \
 We want to use special permissions without shell access. 
+
 This script will help to make sure everything is fine
