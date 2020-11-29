@@ -65,16 +65,15 @@ while true; do
     read -p "$(echo -e "${blue}Try to build lighthouse $tag with make?${reset}")" yn
     case $yn in
         [Yy]* ) make; break;;
-        [Nn]* ) exit;;
+        [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
     esac
 done
-echo "'make' executed"
 
 # check services
 echo "Services found:"
 for i in $(ls /etc/systemd/system/lighthouse*); do
-    echo $i
+    basename $i
 done
 
 # stop services to replace binary
