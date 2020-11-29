@@ -28,3 +28,10 @@ This script will check your lighthouse folders and permissions
 
 ## usage
 * `./update_lighthouse.sh`
+
+This script was updated based on this tutorial:
+https://agstakingco.gitbook.io/pyrmont-lighthouse-eth-2-0-staking-guide/
+
+We like to run as a service and we dont want to use home directory. 
+We want to use special permissions without shell access. 
+This script will help to make sure everything is fine
