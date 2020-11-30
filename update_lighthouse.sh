@@ -4,14 +4,20 @@
 ## Update to new lighthouse version from tags 
 ##############################################
 
-#global vars
+#global vars (tweak for your needs)
+datadir="/var/lib/lighthouse"
+gitdir="$HOME/git"
+targetdir="/usr/local/bin"
+
 blue="\e[1;34m"
+green="\e[0;32m"
+red="\e[0;31m"
 reset="\e[0m"
 
 # permission checks
-stat_beacon=$(stat -c "%a %U %G" /var/lib/lighthouse/beacon)
-stat_validators=$(stat -c "%a %U %G" /var/lib/lighthouse/validators)
-stat_git=$(stat -c "%a %U %G" ~/git/lighthouse)
+stat_beacon=$(stat -c "%a %U %G" $datadir/beacon)
+stat_validators=$(stat -c "%a %U %G" $datadir/validators)
+stat_git=$(stat -c "%a %U %G" $gitdir/lighthouse)
 echo "Check data..."
 echo "stat_beacon: $stat_beacon"
 echo "stat_validators: $stat_validators"
@@ -19,20 +25,20 @@ echo "stat_git: $stat_git"
 
 res=0
 if [[ $stat_beacon != *"lighthousebeacon"* ]]; then
-  echo "beacon folder not found or permissions wrong (/var/lib/lighthouse/beacon) - FAIL"
+  echo -e "${red}beacon folder not found or permissions wrong ($datadir/beacon) - FAIL${reset}"
   let res++
 fi
 if [[ $stat_validators != *"lighthousevalidator"* ]]; then
-  echo "validators folder not found or permissions wrong (/var/lib/lighthouse/validators) - FAIL"
+  echo -e "${red}validators folder not found or permissions wrong ($datadir/validators) - FAIL${reset}"
   let res++
 fi
-if [[ ! -d ~/git/lighthouse ]]; then
-  echo "git folder not found (~/git/lighthouse) - FAIL"
+if [[ ! -d $gitdir ]]; then
+  echo -e "${red}git folder not found ($gitdir/lighthouse) - FAIL${reset}"
   let res++
 fi
 
 if [[ $res != 0 ]]; then
-  echo "Errors in data structure found. Check your folders if exists and permissions are set."
+  echo -e "${red}Errors in data structure found. Check your folders if exists and permissions are set.${reset}"
   exit
 fi
 
@@ -95,14 +101,14 @@ done
 
 # replace binary
 while true; do
-    read -p "$(echo -e "${blue}Replace new lighthouse binary" $tag "in /usr/local/bin now?${reset}")" yn
+    read -p "$(echo -e "${blue}Replace new lighthouse binary" $tag "in ${reset}${green}$targetdir${reset} ${blue}now?${reset}")" yn
     case $yn in
-        [Yy]* ) sudo cp $HOME/.cargo/bin/lighthouse /usr/local/bin/lighthouse; break;;
+        [Yy]* ) sudo cp $HOME/.cargo/bin/lighthouse $targetdir/lighthouse; break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
 done
-echo -e "binary replaced in /usr/local/bin"
+echo -e "binary replaced in $targetdir"
 
 # start services
 while true; do
