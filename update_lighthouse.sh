@@ -71,16 +71,23 @@ while true; do
 done
 
 # check services
-echo "Services found:"
+service_name_beacon=""
+service_name_validator=""
 for i in $(ls /etc/systemd/system/lighthouse*); do
-    basename $i
+    if [[ $i == *"beacon"* ]]; then
+        service_name_beacon=$(basename $i)
+    elif [[ $i == *"validator"* ]]; then
+        service_name_validator=$(basename $i)
+    fi
 done
+echo "Beacon service found: $service_name_beacon"
+echo "Validator service found: $service_name_validator"
 
 # stop services to replace binary
 while true; do
     read -p "$(echo -e "${blue}Stop lighthouse services?${reset}")" yn
     case $yn in
-        [Yy]* ) sudo systemctl stop lighthouse-beacon.service; sudo systemctl stop lighthouse-validators.service; break;;
+        [Yy]* ) sudo systemctl stop $service_name_beacon; sudo systemctl stop $service_name_validator; break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
@@ -101,7 +108,7 @@ echo -e "binary replaced in /usr/local/bin"
 while true; do
     read -p "$(echo -e "${blue}Start lighthouse services?${reset}")" yn
     case $yn in
-        [Yy]* ) sudo systemctl start lighthouse-beacon.service; sudo systemctl start lighthouse-validators.service; break;;
+        [Yy]* ) sudo systemctl start $service_name_beacon; sudo systemctl start $service_name_validator; break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
