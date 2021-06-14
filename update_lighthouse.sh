@@ -70,7 +70,7 @@ echo "'git checkout $tag' executed"
 while true; do
     read -p "$(echo -e "${blue}Try to build lighthouse $tag with make?${reset}")" yn
     case $yn in
-        [Yy]* ) make; break;;
+        [Yy]* ) make clean; make; break;;
         [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
     esac
