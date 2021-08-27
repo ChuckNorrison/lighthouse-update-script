@@ -34,9 +34,6 @@ This is the recommended way to setup your services and data folders.
 
 ## Conclusion
 
-This script was updated based on this tutorial:\
-https://agstakingco.gitbook.io/pyrmont-lighthouse-eth-2-0-staking-guide/
-
 We like to run as a service and we dont want to use home directory. \
 We want to use special permissions without shell access. 
 
