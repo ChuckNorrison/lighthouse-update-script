@@ -54,7 +54,7 @@ done
 # get last release source from github
 cd ~/git/lighthouse
 git fetch --tags
-tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+tag=$(git describe --tags --match "v[0-9]*" `git rev-list --tags --max-count=1` )
 
 while true; do
     read -p "$(echo -e "${blue}Found Release $tag, call git checkout $tag?${reset}")" yn
